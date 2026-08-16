@@ -1,112 +1,112 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
 import { publicEnv } from '@/lib/env';
 import { createServerSupabase } from '@/lib/supabase/server';
-import { credentialsSchema, fieldErrors, magicLinkSchema, onboardingSchema } from '@/lib/validation';
+import {
+  credentialsSchema,
+  fieldErrors,
+  magicLinkSchema,
+  onboardingSchema,
+} from '@/lib/validation';
+import type { FormState } from './form-state';
 
-interface FormState {
-  error?: string;
-  fields?: Record<string, string>;
-  notice?: string;
+/** Whitelist redirect targets so an attacker cannot bounce the user off-site. */
+function safeNext(next: string | undefined | null): string {
+  if (!next) return '/map';
+  return next.startsWith('/') && !next.startsWith('//') ? next : '/map';
 }
 
-/** Only ever redirect inside our own app. Blocks //evil.com and absolute URLs. */
-function safeNext(value: FormDataEntryValue | null, fallback: string): string {
-  const next = typeof value === 'string' ? value : '';
-  if (!next.startsWith('/') || next.startsWith('//')) return fallback;
-  return next;
-}
-
-export async function signInAction(_prev: Record<string, unknown>, formData: FormData): Promise<Record<string, unknown>> {
-  const parsed = credentialsSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-  });
-  if (!parsed.success) return { fields: fieldErrors(parsed.error) };
-
-  const supabase = await createServerSupabase();
-  const { error } = await supabase.auth.signInWithPassword(parsed.data);
-
-  if (error) {
-    return { error: 'That email and password do not match an account.' };
+export async function signInAction(_prev: FormState, formData: FormData): Promise<FormState> {
+  const raw = Object.fromEntries(formData) as Record<string, string>;
+  const parsed = credentialsSchema.safeParse({ email: raw.email, password: raw.password });
+  if (!parsed.success) {
+    return { error: 'Check the details and try again.', fields: fieldErrors(parsed.error) };
   }
 
-  revalidatePath('/', 'layout');
-  redirect(safeNext(formData.get('next'), '/map'));
+  const supabase = await createServerSupabase();
+  const { error } = await supabase.auth.signInWithPassword({
+    email: parsed.data.email,
+    password: parsed.data.password,
+  });
+  if (error) {
+    return { error: 'Those details did not match. Try again or use a one-time link.' };
+  }
+
+  redirect(safeNext(raw.next));
 }
 
 export async function signUpAction(_prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = credentialsSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-  });
-  if (!parsed.success) return { fields: fieldErrors(parsed.error) };
+  const raw = Object.fromEntries(formData) as Record<string, string>;
+  const parsed = credentialsSchema.safeParse({ email: raw.email, password: raw.password });
+  if (!parsed.success) {
+    return { error: 'Check the details and try again.', fields: fieldErrors(parsed.error) };
+  }
 
-  const next = safeNext(formData.get('next'), '/map');
   const supabase = await createServerSupabase();
-
+  const origin = (await headers()).get('origin') ?? publicEnv.siteUrl;
+  const nextPath = safeNext(raw.next);
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
-    options: {
-      emailRedirectTo: `${publicEnv.siteUrl}/auth/callback?next=${encodeURIComponent(
-        `/onboarding?next=${next}`,
-      )}`,
-    },
+    options: { emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(nextPath)}` },
   });
 
   if (error) {
-    return { error: error.message.includes('already') ? 'That email already has an account.' : error.message };
+    return {
+      error:
+        error.message === 'User already registered'
+          ? 'That email already has an account. Sign in instead.'
+          : error.message,
+    };
   }
 
-  // With email confirmation switched on there is no session yet.
-  if (!data.session) {
-    return { notice: 'Check your inbox to confirm your address, then come back here.' };
+  if (data.session) {
+    redirect('/onboarding?next=' + encodeURIComponent(nextPath));
   }
 
-  revalidatePath('/', 'layout');
-  redirect(`/onboarding?next=${encodeURIComponent(next)}`);
+  return {
+    notice:
+      'Check your inbox and open the confirmation link. Then come back and sign in.',
+  };
 }
 
 export async function magicLinkAction(_prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = magicLinkSchema.safeParse({ email: formData.get('email') });
-  if (!parsed.success) return { fields: fieldErrors(parsed.error) };
+  const raw = Object.fromEntries(formData) as Record<string, string>;
+  const parsed = magicLinkSchema.safeParse({ email: raw.email });
+  if (!parsed.success) {
+    return { error: 'Enter a valid email.', fields: fieldErrors(parsed.error) };
+  }
 
-  const next = safeNext(formData.get('next'), '/map');
   const supabase = await createServerSupabase();
-
+  const origin = (await headers()).get('origin') ?? publicEnv.siteUrl;
+  const nextPath = safeNext(raw.next);
   const { error } = await supabase.auth.signInWithOtp({
     email: parsed.data.email,
-    options: {
-      emailRedirectTo: `${publicEnv.siteUrl}/auth/callback?next=${encodeURIComponent(next)}`,
-    },
+    options: { emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(nextPath)}` },
   });
 
-  if (error) return { error: 'That link could not be sent. Try again in a minute.' };
-  return { notice: `A sign-in link is on its way to ${parsed.data.email}.` };
+  if (error) return { error: 'Could not send the link. Try again shortly.' };
+
+  return { notice: 'Sent. Open the link on the same device.' };
 }
 
 export async function completeOnboardingAction(
   _prev: FormState,
   formData: FormData,
 ): Promise<FormState> {
+  const raw = Object.fromEntries(formData) as Record<string, string>;
+  const parsed = onboardingSchema.safeParse(raw);
+  if (!parsed.success) {
+    return { error: 'Something in the form is off.', fields: fieldErrors(parsed.error) };
+  }
+
   const supabase = await createServerSupabase();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  // Re-checked server-side: middleware is the first gate, not the only one.
-  if (!user) return { error: 'Your session expired. Sign in again.' };
-
-  const parsed = onboardingSchema.safeParse({
-    full_name: formData.get('full_name'),
-    phone: formData.get('phone'),
-    usual_donation_times: formData.get('usual_donation_times'),
-    bio: formData.get('bio'),
-  });
-  if (!parsed.success) return { fields: fieldErrors(parsed.error) };
+  if (!user) redirect('/login?next=/onboarding');
 
   const { error } = await supabase
     .from('profiles')
@@ -119,8 +119,7 @@ export async function completeOnboardingAction(
     })
     .eq('id', user.id);
 
-  if (error) return { error: 'Your profile could not be saved. Try again.' };
+  if (error) return { error: 'Could not save your details. Try again.' };
 
-  revalidatePath('/', 'layout');
-  redirect(safeNext(formData.get('next'), '/map'));
+  redirect(safeNext(raw.next));
 }
