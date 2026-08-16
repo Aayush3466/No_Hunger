@@ -71,8 +71,10 @@ export function ActiveOrder({ requestId }: { requestId: string }) {
 
   const orderMarkers = useMemo(() => {
     if (!pickup) return [];
-    const out = [{ position: pickup, label: 'Pickup', tone: 'green' as const }];
-    if (dropoff) out.push({ position: dropoff, label: 'Dropoff', tone: 'honey' as const });
+    const out: Array<{ position: LatLng; label: string; tone: 'green' | 'honey' }> = [
+      { position: pickup, label: 'Pickup', tone: 'green' },
+    ];
+    if (dropoff) out.push({ position: dropoff, label: 'Dropoff', tone: 'honey' });
     return out;
   }, [pickup, dropoff]);
 
