@@ -1,0 +1,81 @@
+/* =============================================================================
+   NoHunger — design tokens
+   Every value below is lifted verbatim from NoHunger-Organic.html. Nothing was
+   re-scaled, re-tuned, rounded or "cleaned up". A token exists only where the
+   substitution is byte-identical to the original literal, so no rendered pixel
+   moves. Values that appeared exactly once and carried no meaning as a token
+   were left inline rather than invented into a scale.
+   ========================================================================== */
+
+:root {
+  /* --- Colour ------------------------------------------------------------ */
+  --nh-ink: #2C1810;          /* body text, footer + stats band background   */
+  --nh-cream: #F5F0E6;        /* page background, card surfaces             */
+  --nh-sand: #EDE4CE;         /* features background, hero art canvas       */
+  --nh-paper: #F0EAD6;        /* hero map illustration base                 */
+  --nh-green: #4A6741;        /* primary                                     */
+  --nh-green-dark: #3d5636;   /* primary hover                               */
+  --nh-sage: #A8BFA0;         /* secondary / decorative                      */
+  --nh-honey: #C8963E;        /* accent                                      */
+  --nh-honey-dark: #b4842f;   /* accent hover                                */
+  --nh-text-muted: #5a4a3f;   /* body copy inside sections                   */
+  --nh-text-subtle: #7a6a5e;  /* captions, metadata                          */
+
+  /* Translucent ink / cream, exactly as written in the source */
+  --nh-ink-04: rgba(44, 24, 16, .04);
+  --nh-ink-06: rgba(44, 24, 16, .06);
+  --nh-ink-08: rgba(44, 24, 16, .08);
+  --nh-ink-12: rgba(44, 24, 16, .12);
+  --nh-ink-20: rgba(44, 24, 16, .2);
+  --nh-ink-25: rgba(44, 24, 16, .25);
+  --nh-ink-35: rgba(44, 24, 16, .35);
+  --nh-cream-10: rgba(245, 240, 230, .1);
+  --nh-cream-15: rgba(245, 240, 230, .15);
+  --nh-cream-25: rgba(245, 240, 230, .25);
+  --nh-cream-85: rgba(245, 240, 230, .85);
+  --nh-green-12: rgba(74, 103, 65, .12);
+  --nh-green-50: rgba(74, 103, 65, .5);
+  --nh-green-60: rgba(74, 103, 65, .6);
+  --nh-honey-40: rgba(200, 150, 62, .4);
+  --nh-honey-50: rgba(200, 150, 62, .5);
+
+  /* --- Type -------------------------------------------------------------- */
+  --nh-font-display: 'Fraunces', serif;
+  --nh-font-body: 'DM Sans', system-ui, sans-serif;
+  --nh-line-height: 1.55;
+
+  /* --- Radii ------------------------------------------------------------- */
+  --nh-radius-xs: 6px;
+  --nh-radius-sm: 10px;
+  --nh-radius-md: 12px;
+  --nh-radius-btn: 14px;
+  --nh-radius-lg: 16px;
+  --nh-radius-xl: 18px;
+  --nh-radius-2xl: 20px;
+  --nh-radius-3xl: 32px;
+  --nh-radius-pill: 99px;
+
+  /* --- Shadows ----------------------------------------------------------- */
+  --nh-shadow-card: 0 12px 30px -20px rgba(200, 150, 62, .4);
+  --nh-shadow-card-hover: 0 20px 40px -20px rgba(200, 150, 62, .5);
+  --nh-shadow-float: 0 20px 40px -20px rgba(44, 24, 16, .35);
+  --nh-shadow-panel: 0 30px 60px -30px rgba(44, 24, 16, .25);
+  --nh-shadow-cta: 0 30px 60px -30px rgba(74, 103, 65, .5);
+  --nh-shadow-btn: 0 8px 20px -8px rgba(74, 103, 65, .6);
+
+  /* --- Layout ------------------------------------------------------------ */
+  --nh-container-wide: 1240px;
+  --nh-container: 1180px;
+  --nh-gutter: 1.5rem;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --nh-transition: all .2s ease;
+
+  /* --- Mobile shell (new screens only; unused on the landing page) -------- */
+  --nh-safe-top: env(safe-area-inset-top, 0px);
+  --nh-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --nh-safe-left: env(safe-area-inset-left, 0px);
+  --nh-safe-right: env(safe-area-inset-right, 0px);
+  --nh-bottom-nav-height: 64px;
+  --nh-tap-target: 44px;
+}

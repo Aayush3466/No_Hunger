@@ -1,0 +1,149 @@
+.wrap {
+  position: relative;
+}
+
+.trigger {
+  position: relative;
+  min-width: var(--nh-tap-target);
+  min-height: var(--nh-tap-target);
+  display: grid;
+  place-items: center;
+  border-radius: var(--nh-radius-md);
+  color: var(--nh-ink);
+  background: transparent;
+  transition: background .15s ease;
+}
+
+.trigger:hover {
+  background: var(--nh-green-12);
+}
+
+.badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--nh-honey);
+  color: var(--nh-cream);
+  font-size: .7rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+/*
+ * Dropdown is `position: fixed`, not absolute. This is deliberate.
+ *
+ * Reason: the bell sits inside the app-shell's `header` grid area. The map
+ * lives inside the `main` grid area. Leaflet inside `main` creates its own
+ * stacking context with internal z-indexes up to ~700 for popups. A
+ * position-absolute dropdown inside the header cannot be raised above
+ * Leaflet's stacking context from a different grid area, no matter how high
+ * we crank z-index.
+ *
+ * Fixed positioning escapes every containing block and every stacking context,
+ * placing the dropdown at the viewport root. It then sits above everything,
+ * always.
+ */
+.panel {
+  position: fixed;
+  top: calc(var(--nh-topbar-height, 4rem) + .5rem);
+  right: 1rem;
+  z-index: 1000;
+  width: min(360px, calc(100vw - 2rem));
+  background: var(--nh-cream);
+  border: 1px solid var(--nh-ink-08);
+  border-radius: var(--nh-radius-lg);
+  box-shadow: var(--nh-shadow-float);
+  overflow: hidden;
+}
+
+/* On desktop, the app-shell has a left nav rail; keep the dropdown clear of it. */
+@media (min-width: 900px) {
+  .panel {
+    right: 1rem;
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .85rem 1rem;
+  border-bottom: 1px solid var(--nh-ink-08);
+  background: var(--nh-sand);
+}
+
+.panelTitle {
+  font-weight: 700;
+  font-size: .9rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--nh-ink);
+}
+
+.markAll {
+  font-size: .8rem;
+  color: var(--nh-green);
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.markAll:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  padding: 1.25rem 1rem;
+  color: var(--nh-text-muted);
+  font-size: .88rem;
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 60dvh;
+  overflow-y: auto;
+}
+
+.item {
+  border-bottom: 1px solid var(--nh-ink-06);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.itemUnread {
+  background: var(--nh-green-12);
+}
+
+.itemLink {
+  display: grid;
+  gap: .25rem;
+  padding: .8rem 1rem;
+  color: inherit;
+}
+
+.itemLink:hover {
+  background: var(--nh-ink-04);
+}
+
+.itemLine {
+  font-size: .92rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.itemMeta {
+  font-size: .75rem;
+  color: var(--nh-text-subtle);
+}

@@ -1,0 +1,58 @@
+.ratings {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--nh-ink-12);
+}
+
+@container (min-width: 480px) {
+  .ratings {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ratings {
+  container-type: inline-size;
+}
+
+.ratingBlock {
+  display: grid;
+  gap: .35rem;
+}
+
+.ratingLabel {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--nh-text-subtle);
+}
+
+.staticStars {
+  display: inline-flex;
+  gap: .1rem;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.staticStarOn {
+  color: var(--nh-honey);
+}
+
+.staticStarOff {
+  color: var(--nh-ink-20);
+}
+
+.ratingComment {
+  color: var(--nh-text-muted);
+  font-style: italic;
+  font-size: .88rem;
+  margin: .15rem 0 0;
+}
+
+.ratingButton {
+  justify-self: start;
+  padding: .35rem .75rem;
+  font-size: .8rem;
+}

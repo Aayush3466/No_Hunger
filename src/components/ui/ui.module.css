@@ -1,0 +1,406 @@
+/* =============================================================================
+   Shared surfaces for the screens the design did not cover: map, donate,
+   orders, history, profile.
+
+   Nothing here is invented. Every colour, radius, shadow, font and weight comes
+   from tokens.css, which came from the source HTML. The type scale is the one
+   already used by the landing page: .serif display faces at 1.3–1.35rem for
+   card headings, .95–1.15rem DM Sans for body, .78–.82rem for metadata.
+   ========================================================================== */
+
+/* --- page scaffolding ------------------------------------------------------ */
+.screen {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem var(--nh-gutter) 2rem;
+}
+
+.screenWide {
+  max-width: var(--nh-container);
+}
+
+.topBar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  background: var(--nh-cream-85);
+  border-bottom: 1px solid var(--nh-ink-08);
+  padding-block-start: var(--nh-safe-top);
+}
+
+.topBarInner {
+  max-width: var(--nh-container);
+  margin: 0 auto;
+  padding: .9rem var(--nh-gutter);
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: var(--nh-font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--nh-ink);
+}
+
+.brandMark {
+  width: 28px;
+  height: 28px;
+  background: var(--nh-green);
+  border-radius: var(--nh-radius-sm);
+  display: grid;
+  place-items: center;
+  color: var(--nh-cream);
+  font-size: 1rem;
+}
+
+.eyebrow {
+  color: var(--nh-green);
+  font-weight: 600;
+  letter-spacing: .12em;
+  font-size: .8rem;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+}
+
+.title {
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  font-weight: 700;
+  margin: 0 0 .5rem;
+}
+
+.lede {
+  color: var(--nh-text-muted);
+  font-size: 1rem;
+  margin: 0 0 1.5rem;
+  max-width: 52ch;
+}
+
+/* --- cards ----------------------------------------------------------------- */
+.card {
+  background: var(--nh-cream);
+  border-radius: var(--nh-radius-2xl);
+  padding: 1.25rem;
+  box-shadow: var(--nh-shadow-card);
+  border: 1px solid var(--nh-ink-06);
+}
+
+.cardSand {
+  background: var(--nh-sand);
+  box-shadow: none;
+}
+
+.cardTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 .35rem;
+}
+
+.cardMeta {
+  font-size: .78rem;
+  color: var(--nh-text-subtle);
+}
+
+.cardBody {
+  color: var(--nh-text-muted);
+  font-size: .95rem;
+  margin: 0;
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.stackTight {
+  display: grid;
+  gap: .5rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- forms ----------------------------------------------------------------- */
+.field {
+  display: grid;
+  gap: .4rem;
+}
+
+.label {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--nh-ink);
+}
+
+.hint {
+  font-size: .78rem;
+  color: var(--nh-text-subtle);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: var(--nh-tap-target);
+  padding: .8rem 1rem;
+  border-radius: var(--nh-radius-btn);
+  border: 1.5px solid var(--nh-ink-12);
+  background: var(--nh-cream);
+  color: var(--nh-ink);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: var(--nh-line-height);
+}
+
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--nh-text-subtle) 50%),
+    linear-gradient(135deg, var(--nh-text-subtle) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-inline-end: 2.5rem;
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--nh-honey);
+}
+
+.input[aria-invalid='true'],
+.select[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: #a4452f;
+}
+
+.error {
+  font-size: .82rem;
+  color: #a4452f;
+}
+
+.formError {
+  padding: .8rem 1rem;
+  border-radius: var(--nh-radius-md);
+  background: color-mix(in srgb, #a4452f 10%, var(--nh-cream));
+  border: 1px solid color-mix(in srgb, #a4452f 30%, transparent);
+  color: #7d3423;
+  font-size: .9rem;
+}
+
+.formActions {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+
+/* Segmented control, used for category / mode pickers. */
+.segments {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+.segment {
+  min-height: var(--nh-tap-target);
+  padding: .55rem 1rem;
+  border-radius: var(--nh-radius-pill);
+  border: 1.5px solid var(--nh-ink-12);
+  background: transparent;
+  color: var(--nh-text-muted);
+  font-size: .9rem;
+  font-weight: 600;
+  transition: var(--nh-transition);
+}
+
+.segmentActive {
+  background: var(--nh-green);
+  border-color: var(--nh-green);
+  color: var(--nh-cream);
+}
+
+/* --- chips / pills --------------------------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .7rem;
+  border-radius: var(--nh-radius-pill);
+  background: var(--nh-green-12);
+  color: var(--nh-green);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.chipHoney {
+  background: color-mix(in srgb, var(--nh-honey) 16%, transparent);
+  color: #8a6118;
+}
+
+.chipUrgent {
+  background: color-mix(in srgb, #a4452f 14%, transparent);
+  color: #8a3423;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+/* --- empty / loading ------------------------------------------------------- */
+.empty {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  color: var(--nh-text-muted);
+}
+
+.emptyTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 .5rem;
+  color: var(--nh-ink);
+}
+
+.skeleton {
+  background: color-mix(in srgb, var(--nh-ink) 7%, var(--nh-sand));
+  border-radius: var(--nh-radius-md);
+  animation: nh-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes nh-pulse {
+  0%, 100% { opacity: 1 }
+  50% { opacity: .55 }
+}
+
+/* --- safety notice --------------------------------------------------------- */
+.notice {
+  background: var(--nh-sand);
+  border-radius: var(--nh-radius-lg);
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--nh-ink-06);
+}
+
+.noticeTitle {
+  font-family: var(--nh-font-display);
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -.015em;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 .5rem;
+}
+
+.noticeList {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  color: var(--nh-text-muted);
+  font-size: .88rem;
+  display: grid;
+  gap: .3rem;
+}
+
+/* --- avatars --------------------------------------------------------------- */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--nh-radius-md);
+  background: var(--nh-honey);
+  color: var(--nh-cream);
+  display: grid;
+  place-items: center;
+  font-family: var(--nh-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+@container (min-width: 560px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cardGrid {
+  container-type: inline-size;
+  display: grid;
+  gap: 1rem;
+}
+
+/* -----------------------------------------------------------------------------
+   Auth: tabbed switcher.
+   Works identically on mobile and desktop. The tab bar sits on top of a card;
+   the active tab shows an underline in the accent colour.
+   -------------------------------------------------------------------------- */
+.authCard {
+  background: var(--nh-cream);
+  border: 1px solid var(--nh-ink-08);
+  border-radius: var(--nh-radius-2xl);
+  box-shadow: var(--nh-shadow-card);
+  overflow: hidden;
+}
+
+.authTabs {
+  display: flex;
+  border-bottom: 1px solid var(--nh-ink-08);
+  background: var(--nh-sand);
+}
+
+.authTab {
+  flex: 1;
+  min-height: var(--nh-tap-target);
+  padding: 1rem 1.25rem;
+  background: transparent;
+  color: var(--nh-text-subtle);
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.authTab:hover {
+  color: var(--nh-ink);
+  background: var(--nh-cream);
+}
+
+.authTabActive {
+  color: var(--nh-green);
+  background: var(--nh-cream);
+  border-bottom-color: var(--nh-green);
+}
+
+.authPanel {
+  padding: 1.5rem 1.25rem 1.75rem;
+}

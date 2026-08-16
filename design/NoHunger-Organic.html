@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoHunger — Turn extra food into someone's next meal</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;color:#2C1810;background:#F5F0E6;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:#4A6741;text-decoration:none}
+  a:hover{color:#C8963E}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+  :focus-visible{outline:2px solid #C8963E;outline-offset:3px;border-radius:6px}
+  .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;pointer-events:none;z-index:0}
+  .serif{font-family:'Fraunces',serif;font-variation-settings:"opsz" 144;letter-spacing:-.015em}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.95rem 1.6rem;border-radius:14px;font-weight:600;font-size:1rem;transition:all .2s ease;border:1.5px solid transparent}
+  .btn-primary{background:#4A6741;color:#F5F0E6}
+  .btn-primary:hover{background:#3d5636;transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(74,103,65,.6)}
+  .btn-outline{border-color:#2C1810;color:#2C1810}
+  .btn-outline:hover{background:#2C1810;color:#F5F0E6}
+  .btn-honey{background:#C8963E;color:#F5F0E6}
+  .btn-honey:hover{background:#b4842f}
+</style>
+
+</head>
+<body>
+<div style="min-height:100vh;background:#F5F0E6;overflow-x:hidden;position:relative">
+
+  <header style="position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(245,240,230,.85);border-bottom:1px solid rgba(44,24,16,.08)">
+    <nav style="max-width:1240px;margin:0 auto;padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between">
+      <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:#2C1810">
+        <span style="width:32px;height:32px;background:#4A6741;border-radius:10px;display:grid;place-items:center;color:#F5F0E6;font-size:1.1rem">◐</span>
+        NoHunger
+      </a>
+      <div style="display:flex;gap:2rem;align-items:center;font-size:.95rem;font-weight:500">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#cta" class="btn btn-primary" style="padding:.6rem 1.15rem;font-size:.9rem">Get started</a>
+      </div>
+    </nav>
+  </header>
+
+  <section style="position:relative;padding:5rem 1.5rem 4rem;overflow:hidden">
+    <div class="blob" style="background:#A8BFA0;width:420px;height:420px;top:-100px;left:-120px"></div>
+    <div class="blob" style="background:#C8963E;width:360px;height:360px;bottom:-80px;right:-40px;opacity:.25"></div>
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center;position:relative;z-index:1">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:.55rem;padding:.4rem .9rem;background:rgba(74,103,65,.12);color:#4A6741;border-radius:99px;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.5rem">
+          <span style="width:6px;height:6px;background:#4A6741;border-radius:50%"></span>
+          Farmers-market fresh, neighborhood-wide
+        </div>
+        <h1 class="serif" style="font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:700;line-height:1.02;margin:0 0 1.5rem">
+          Turn your extra food into someone's <em style="font-style:italic;color:#C8963E;font-variation-settings:'opsz' 144">next meal.</em>
+        </h1>
+        <p style="font-size:1.15rem;color:#5a4a3f;max-width:520px;margin:0 0 2rem">
+          NoHunger is a real-time sharing platform that pairs neighbors with extra food with people who could use a meal — before anything goes to waste.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:.8rem">
+          <a href="#cta" class="btn btn-primary">Donate Food →</a>
+          <a href="#" class="btn btn-outline">Find Food Near You</a>
+        </div>
+        <div style="display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px dashed rgba(44,24,16,.2)">
+          <div><div class="serif" style="font-size:1.6rem;font-weight:700;color:#4A6741">2.3B</div><div style="font-size:.82rem;color:#7a6a5e">meals wasted daily</div></div>
+          <div><div class="serif" style="font-size:1.6rem;font-weight:700;color:#4A6741">828M</div><div style="font-size:.82rem;color:#7a6a5e">people hungry</div></div>
+          <div><div class="serif" style="font-size:1.6rem;font-weight:700;color:#4A6741">10K+</div><div style="font-size:.82rem;color:#7a6a5e">community shares</div></div>
+        </div>
+      </div>
+
+      <div style="position:relative;aspect-ratio:1/1.05">
+        <div style="position:absolute;inset:0;background:#EDE4CE;border-radius:32px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(44,24,16,.25)">
+          <svg viewBox="0 0 400 420" style="width:100%;height:100%;display:block" aria-hidden="true">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M40 0H0V40" fill="none" stroke="rgba(74,103,65,.12)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="420" fill="#F0EAD6"/>
+            <rect width="400" height="420" fill="url(#grid)"/>
+            <path d="M-20,140 Q100,80 200,160 T440,120" fill="none" stroke="#A8BFA0" stroke-width="6" opacity=".6"/>
+            <path d="M-20,280 Q120,220 240,300 T440,280" fill="none" stroke="#C8963E" stroke-width="4" opacity=".35" stroke-dasharray="8 8"/>
+            <circle cx="120" cy="130" r="18" fill="#4A6741" opacity=".18"/>
+            <circle cx="120" cy="130" r="9" fill="#4A6741"/>
+            <circle cx="260" cy="90" r="18" fill="#C8963E" opacity=".18"/>
+            <circle cx="260" cy="90" r="9" fill="#C8963E"/>
+            <circle cx="310" cy="220" r="22" fill="#4A6741" opacity=".18"/>
+            <circle cx="310" cy="220" r="11" fill="#4A6741"/>
+            <circle cx="90" cy="290" r="18" fill="#C8963E" opacity=".18"/>
+            <circle cx="90" cy="290" r="9" fill="#C8963E"/>
+          </svg>
+        </div>
+        <div style="position:absolute;left:6%;right:6%;bottom:8%;background:#F5F0E6;border-radius:18px;padding:1rem 1.1rem;display:flex;align-items:center;gap:.9rem;box-shadow:0 20px 40px -20px rgba(44,24,16,.35);border:1px solid rgba(44,24,16,.06)">
+          <div style="width:44px;height:44px;background:#C8963E;border-radius:12px;display:grid;place-items:center;color:#F5F0E6;font-family:'Fraunces',serif;font-weight:700">🍲</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:.98rem">Dal &amp; Rice</div>
+            <div style="font-size:.78rem;color:#7a6a5e">0.3 km away · 5m ago · serves 4</div>
+          </div>
+          <button class="btn btn-primary" style="padding:.55rem 1.1rem;font-size:.85rem">Get</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#2C1810;color:#F5F0E6;padding:3rem 1.5rem">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center">
+      <div>
+        <div class="serif" style="font-size:2.6rem;font-weight:700;color:#C8963E">2.3B</div>
+        <div style="opacity:.8;font-size:.95rem">meals wasted daily worldwide</div>
+      </div>
+      <div style="border-left:1px solid rgba(245,240,230,.15);border-right:1px solid rgba(245,240,230,.15)">
+        <div class="serif" style="font-size:2.6rem;font-weight:700;color:#C8963E">828M</div>
+        <div style="opacity:.8;font-size:.95rem">people go hungry each night</div>
+      </div>
+      <div>
+        <div class="serif" style="font-size:2.6rem;font-weight:700;color:#C8963E">10,000+</div>
+        <div style="opacity:.8;font-size:.95rem">community food shares this month</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="padding:6rem 1.5rem;position:relative">
+    <div style="max-width:1180px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:4rem">
+        <div style="color:#4A6741;font-weight:600;letter-spacing:.12em;font-size:.8rem;text-transform:uppercase;margin-bottom:.75rem">How it works</div>
+        <h2 class="serif" style="font-size:clamp(2rem,4vw,3rem);font-weight:700;margin:0">Three simple steps to zero waste.</h2>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem">
+        <svg style="position:absolute;top:52px;left:12%;right:12%;width:76%;height:20px;z-index:0" viewBox="0 0 800 20" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,10 Q200,-10 400,10 T800,10" stroke="#4A6741" stroke-width="2" fill="none" stroke-dasharray="2 8" opacity=".5"/>
+        </svg>
+        <div style="text-align:center;position:relative;z-index:1">
+          <div style="width:104px;height:104px;background:#F5F0E6;border:2px solid #A8BFA0;border-radius:50%;margin:0 auto 1.5rem;display:grid;place-items:center">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4A6741" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.3rem;font-weight:700;margin:0 0 .5rem">Sign up as donor or receiver</h3>
+          <p style="color:#5a4a3f;font-size:.95rem;margin:0;max-width:280px;margin-inline:auto">Create your profile in under a minute. Switch roles anytime.</p>
+        </div>
+        <div style="text-align:center;position:relative;z-index:1">
+          <div style="width:104px;height:104px;background:#F5F0E6;border:2px solid #C8963E;border-radius:50%;margin:0 auto 1.5rem;display:grid;place-items:center">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#C8963E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.3rem;font-weight:700;margin:0 0 .5rem">List your extra food live</h3>
+          <p style="color:#5a4a3f;font-size:.95rem;margin:0;max-width:280px;margin-inline:auto">Snap a photo, add portions and a pickup window. It goes straight to the map.</p>
+        </div>
+        <div style="text-align:center;position:relative;z-index:1">
+          <div style="width:104px;height:104px;background:#F5F0E6;border:2px solid #A8BFA0;border-radius:50%;margin:0 auto 1.5rem;display:grid;place-items:center">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4A6741" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.3rem;font-weight:700;margin:0 0 .5rem">Neighbors claim &amp; collect</h3>
+          <p style="color:#5a4a3f;font-size:.95rem;margin:0;max-width:280px;margin-inline:auto">A neighbor picks it up in person. No apps for delivery, no middlemen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="padding:5rem 1.5rem;background:#EDE4CE;position:relative;overflow:hidden">
+    <div class="blob" style="background:#A8BFA0;width:340px;height:340px;top:-60px;right:-40px;opacity:.3"></div>
+    <div style="max-width:1180px;margin:0 auto;position:relative;z-index:1">
+      <div style="max-width:640px;margin-bottom:3rem">
+        <div style="color:#4A6741;font-weight:600;letter-spacing:.12em;font-size:.8rem;text-transform:uppercase;margin-bottom:.75rem">What's inside</div>
+        <h2 class="serif" style="font-size:clamp(2rem,4vw,2.8rem);font-weight:700;margin:0">Thoughtful features, built around real neighborhoods.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem">
+        <article style="background:#F5F0E6;border-radius:20px;padding:2rem;box-shadow:0 12px 30px -20px rgba(200,150,62,.4);transition:transform .2s ease,box-shadow .2s ease" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(200,150,62,.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 12px 30px -20px rgba(200,150,62,.4)'">
+          <div style="width:56px;height:56px;background:#4A6741;border-radius:16px;display:grid;place-items:center;margin-bottom:1.2rem">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F5F0E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.35rem;font-weight:700;margin:0 0 .5rem">Live Map</h3>
+          <p style="color:#5a4a3f;margin:0;font-size:.98rem">See fresh listings pop up around you in real time — no refresh needed.</p>
+        </article>
+        <article style="background:#F5F0E6;border-radius:20px;padding:2rem;box-shadow:0 12px 30px -20px rgba(200,150,62,.4);transition:transform .2s ease,box-shadow .2s ease" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(200,150,62,.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 12px 30px -20px rgba(200,150,62,.4)'">
+          <div style="width:56px;height:56px;background:#C8963E;border-radius:16px;display:grid;place-items:center;margin-bottom:1.2rem">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F5F0E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.35rem;font-weight:700;margin:0 0 .5rem">Time-aware freshness</h3>
+          <p style="color:#5a4a3f;margin:0;font-size:.98rem">Each listing tracks how long ago it was made, with visual freshness signals.</p>
+        </article>
+        <article style="background:#F5F0E6;border-radius:20px;padding:2rem;box-shadow:0 12px 30px -20px rgba(200,150,62,.4);transition:transform .2s ease,box-shadow .2s ease" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(200,150,62,.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 12px 30px -20px rgba(200,150,62,.4)'">
+          <div style="width:56px;height:56px;background:#4A6741;border-radius:16px;display:grid;place-items:center;margin-bottom:1.2rem">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F5F0E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 12h6M12 9v6"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.35rem;font-weight:700;margin:0 0 .5rem">Portion control</h3>
+          <p style="color:#5a4a3f;margin:0;font-size:.98rem">Claim only what you need — the rest stays available for the next neighbor.</p>
+        </article>
+        <article style="background:#F5F0E6;border-radius:20px;padding:2rem;box-shadow:0 12px 30px -20px rgba(200,150,62,.4);transition:transform .2s ease,box-shadow .2s ease" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(200,150,62,.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 12px 30px -20px rgba(200,150,62,.4)'">
+          <div style="width:56px;height:56px;background:#C8963E;border-radius:16px;display:grid;place-items:center;margin-bottom:1.2rem">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F5F0E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          </div>
+          <h3 class="serif" style="font-size:1.35rem;font-weight:700;margin:0 0 .5rem">Zero waste auto-removal</h3>
+          <p style="color:#5a4a3f;margin:0;font-size:.98rem">Expired listings drop off automatically. Nothing lingers, nothing forgotten.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" style="padding:6rem 1.5rem;position:relative;overflow:hidden">
+    <div class="blob" style="background:#C8963E;width:400px;height:400px;top:-50px;left:20%;opacity:.25"></div>
+    <div class="blob" style="background:#A8BFA0;width:400px;height:400px;bottom:-100px;right:15%;opacity:.4"></div>
+    <div style="max-width:720px;margin:0 auto;text-align:center;background:#4A6741;color:#F5F0E6;border-radius:32px;padding:4rem 2rem;position:relative;z-index:1;box-shadow:0 30px 60px -30px rgba(74,103,65,.5)">
+      <h2 class="serif" style="font-size:clamp(2rem,4vw,2.8rem);font-weight:700;margin:0 0 1rem">Ready to make a difference?</h2>
+      <p style="opacity:.85;max-width:460px;margin:0 auto 2rem">Join thousands of neighbors already sharing meals in their community.</p>
+      <form style="display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;margin:0 auto" onsubmit="event.preventDefault()">
+        <input type="email" placeholder="you@neighborhood.com" style="flex:1;min-width:220px;padding:.95rem 1.1rem;border-radius:14px;border:1.5px solid rgba(245,240,230,.25);background:rgba(245,240,230,.1);color:#F5F0E6;font-family:inherit;font-size:1rem" />
+        <button type="submit" class="btn btn-honey">Get Started Free</button>
+      </form>
+      <div style="margin-top:1.5rem;font-size:.85rem;opacity:.7">Free forever · No credit card · Built for community</div>
+    </div>
+  </section>
+
+  <footer style="background:#2C1810;color:#F5F0E6;padding:4rem 1.5rem 2rem">
+    <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:3rem">
+      <div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;margin-bottom:1rem">
+          <span style="width:32px;height:32px;background:#C8963E;border-radius:10px;display:grid;place-items:center;color:#2C1810">◐</span>
+          NoHunger
+        </div>
+        <p style="opacity:.7;font-size:.9rem;max-width:280px;margin:0">A community platform for a world where no meal is wasted and no neighbor goes hungry.</p>
+      </div>
+      <div>
+        <div style="font-weight:600;margin-bottom:1rem;font-size:.9rem;letter-spacing:.05em;text-transform:uppercase;color:#C8963E">Product</div>
+        <div style="display:grid;gap:.6rem;font-size:.95rem;opacity:.85"><a href="#" style="color:inherit">How it works</a><a href="#" style="color:inherit">Live map</a><a href="#" style="color:inherit">Community</a></div>
+      </div>
+      <div>
+        <div style="font-weight:600;margin-bottom:1rem;font-size:.9rem;letter-spacing:.05em;text-transform:uppercase;color:#C8963E">Company</div>
+        <div style="display:grid;gap:.6rem;font-size:.95rem;opacity:.85"><a href="#" style="color:inherit">About</a><a href="#" style="color:inherit">Impact</a><a href="#" style="color:inherit">Contact</a></div>
+      </div>
+      <div>
+        <div style="font-weight:600;margin-bottom:1rem;font-size:.9rem;letter-spacing:.05em;text-transform:uppercase;color:#C8963E">Legal</div>
+        <div style="display:grid;gap:.6rem;font-size:.95rem;opacity:.85"><a href="#" style="color:inherit">Privacy</a><a href="#" style="color:inherit">Terms</a><a href="#" style="color:inherit">Safety</a></div>
+      </div>
+    </div>
+    <div style="max-width:1180px;margin:3rem auto 0;padding-top:2rem;border-top:1px solid rgba(245,240,230,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.85rem;opacity:.7">
+      <div>Built for UN SDG 2 — Zero Hunger</div>
+      <div>© 2026 NoHunger Collective</div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

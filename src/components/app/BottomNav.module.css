@@ -1,0 +1,76 @@
+/* -----------------------------------------------------------------------------
+   Nav sits in the grid, not fixed to the viewport. Mobile: horizontal row at
+   the bottom. Desktop (>=900px): 88px vertical rail on the left.
+
+   Nothing overlaps anything because nav is a grid child, not a floating box.
+   -------------------------------------------------------------------------- */
+.nav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: row;
+  background: var(--nh-cream);
+  border-top: 1px solid var(--nh-ink-08);
+  padding-block-end: var(--nh-safe-bottom);
+  padding-inline: max(var(--nh-safe-left), .25rem) max(var(--nh-safe-right), .25rem);
+}
+
+.item {
+  flex: 1;
+  min-height: var(--nh-bottom-nav-height);
+  display: grid;
+  place-items: center;
+  gap: .15rem;
+  padding: .5rem .25rem;
+  color: var(--nh-text-subtle);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-align: center;
+  transition: color .15s ease, background .15s ease;
+}
+
+.item:hover {
+  color: var(--nh-green);
+  background: var(--nh-green-12);
+}
+
+.itemActive {
+  color: var(--nh-green);
+}
+
+.itemActive:hover {
+  background: var(--nh-green-12);
+}
+
+.icon {
+  display: block;
+}
+
+/* Desktop: vertical left rail. Same items, laid out top to bottom. */
+@media (min-width: 900px) {
+  .nav {
+    flex-direction: column;
+    border-top: none;
+    border-inline-end: 1px solid var(--nh-ink-08);
+    padding-block: 1.25rem .75rem;
+    padding-inline: 0;
+    gap: .35rem;
+  }
+
+  .item {
+    flex: 0 0 auto;
+    min-height: auto;
+    width: 100%;
+    padding: .75rem .25rem;
+    gap: .3rem;
+    border-radius: 0;
+  }
+
+  .item:hover {
+    background: var(--nh-green-12);
+  }
+
+  .itemActive {
+    background: var(--nh-green-12);
+  }
+}

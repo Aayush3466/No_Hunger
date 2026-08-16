@@ -1,0 +1,54 @@
+.picker {
+  position: relative;
+  height: 260px;
+  border-radius: var(--nh-radius-2xl);
+  overflow: hidden;
+  border: 1px solid var(--nh-ink-08);
+}
+
+.pickerHint {
+  position: absolute;
+  inset-inline: .75rem;
+  bottom: .75rem;
+  z-index: 500;
+  background: var(--nh-cream-85);
+  backdrop-filter: blur(8px);
+  border-radius: var(--nh-radius-md);
+  padding: .5rem .75rem;
+  font-size: .78rem;
+  color: var(--nh-text-muted);
+  text-align: center;
+}
+
+.photoDrop {
+  display: grid;
+  place-items: center;
+  gap: .5rem;
+  min-height: 160px;
+  border: 1.5px dashed var(--nh-ink-20);
+  border-radius: var(--nh-radius-2xl);
+  background: var(--nh-sand);
+  color: var(--nh-text-muted);
+  font-size: .9rem;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.photoPreview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--nh-radius-2xl);
+  display: block;
+}
+
+.photoMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  font-size: .78rem;
+  color: var(--nh-text-subtle);
+  margin-top: .5rem;
+}
