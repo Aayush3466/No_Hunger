@@ -34,6 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .brand {
@@ -653,4 +654,319 @@
 .ctaSecondary:hover {
   background: var(--nh-cream);
   color: var(--nh-green);
+}
+
+
+
+
+/* --- header: mobile nav (new — desktop is unaffected) -------------------- */
+
+/* Wrapper is layout-transparent on desktop, so brand + links keep their
+   original flex positions. */
+.navWrap {
+  display: contents;
+}
+
+/* Hamburger button — hidden until the mobile breakpoint. */
+.navToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: var(--nh-tap-target);
+  height: var(--nh-tap-target);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--nh-ink);
+}
+
+.navToggleBar {
+  width: 22px;
+  height: 2px;
+  margin: 0 auto;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+/* Bars animate into an X when open (pitch = 2px bar + 5px gap = 7px). */
+.navToggleOpen .navToggleBar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navToggleOpen .navToggleBar:nth-child(2) { opacity: 0; }
+.navToggleOpen .navToggleBar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 800px) {
+  .nav {
+    padding: 0.6rem var(--nh-gutter);
+  }
+
+  .navToggle {
+    display: flex;
+  }
+
+  /* Links + CTA become a dropdown panel under the sticky bar. */
+  .navLinks {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem var(--nh-gutter) calc(1rem + var(--nh-safe-bottom));
+    background: var(--nh-cream);
+    border-bottom: 1px solid var(--nh-ink-08);
+    box-shadow: var(--nh-shadow-panel);
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+
+    /* closed state — hidden but animatable */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  }
+
+  .navLinksOpen {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  /* Each anchor becomes a full-width, tappable row. */
+  .navLinks > a {
+    display: flex;
+    align-items: center;
+    min-height: var(--nh-tap-target);
+    padding: 0.35rem 0.15rem;
+    border-bottom: 1px solid var(--nh-ink-06);
+    font-size: 1rem;
+  }
+
+  /* Auth CTA (Sign in / Logout) sits below the links, full width. */
+  .navLinks :global(.btn).headerCta {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.75rem;
+    padding: 0.85rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  /* Signed-in row: avatar left, full-width Logout beside it. */
+  .authGroup {
+    width: 100%;
+    margin-top: 0.75rem;
+    justify-content: space-between;
+  }
+
+  .authGroup form {
+    flex: 1;
+  }
+}
+/* =============================================================================
+   RESPONSIVE LAYER — tablet & mobile
+   The landing markup was a 1:1 desktop port with no breakpoints. Everything
+   below is additive and lives inside @media queries, so the desktop rendering
+   above is untouched. Two stops: 900px (tablet) and 600px (phone).
+   ========================================================================== */
+
+/* ---- Tablet and down (≤ 900px) ------------------------------------------ */
+@media (max-width: 900px) {
+  /* Hero: stack the copy above the artwork instead of side-by-side. */
+  .hero {
+    padding: 3.5rem var(--nh-gutter) 3rem;
+  }
+
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Cap + centre the map card so it isn't the full column width on a tablet. */
+  .heroArt {
+    width: 100%;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  /* Drop the hero mini-stats on small screens: the dark stats band right below
+     shows the same three numbers, so on a stacked mobile layout they read as a
+     duplicate. Desktop keeps them (they sit apart there). */
+  .heroStats {
+    display: none;
+  }
+
+  /* Stats band: keep 3 across but shrink the numerals so they fit their track. */
+  :global(.serif).bandValue {
+    font-size: 2.1rem;
+  }
+
+  /* Trim the generous section rhythm for smaller viewports. */
+  .how {
+    padding: 4rem var(--nh-gutter);
+  }
+
+  .howHead {
+    margin-bottom: 2.5rem;
+  }
+
+  .features {
+    padding: 3.5rem var(--nh-gutter);
+  }
+
+  .featuresHead {
+    margin-bottom: 2rem;
+  }
+
+  .cta {
+    padding: 4rem var(--nh-gutter);
+  }
+
+  /* Footer: 4 columns → 2, with the brand block spanning the full width. */
+    .footerGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 2.5rem;
+  }
+
+  .footerGrid > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---- Phone and down (≤ 600px) ------------------------------------------- */
+@media (max-width: 600px) {
+  .hero {
+    padding: 2.5rem var(--nh-gutter) 2.5rem;
+  }
+    /* Floating listing card: tighten spacing so the meta line fits on one row
+     instead of wrapping to three cramped lines. */
+  .heroCard {
+    left: 4%;
+    right: 4%;
+    padding: 0.8rem;
+    gap: 0.7rem;
+  }
+
+  .heroCardThumb {
+    width: 40px;
+    height: 40px;
+  }
+
+  .heroCardMeta {
+    font-size: 0.72rem;
+  }
+
+  :global(.btn).heroCardBtn {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  /* Full-width, stacked primary actions read better on a phone. */
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroActions :global(.btn) {
+    justify-content: center;
+  }
+
+  .heroStats {
+    gap: 1.25rem;
+  }
+
+  /* Stats band: stack into a single column; flip the middle divider to
+     horizontal rules so the separation still reads. */
+  .band {
+    padding: 2rem var(--nh-gutter);
+  }
+
+  .bandGrid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .bandGrid > div {
+    padding: 1.25rem 0;
+  }
+
+  .bandCellDivided {
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid var(--nh-cream-15);
+    border-bottom: 1px solid var(--nh-cream-15);
+  }
+
+  :global(.serif).bandValue {
+    font-size: 2.4rem;
+  }
+
+  /* How it works: stack the steps and drop the horizontal connector. */
+  .how {
+    padding: 3rem var(--nh-gutter);
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .stepsConnector {
+    display: none;
+  }
+
+  /* Features: one card per row, slightly tighter padding. */
+  .features {
+    padding: 3rem var(--nh-gutter);
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featureCard {
+    padding: 1.5rem;
+  }
+
+  /* CTA: shrink the card and let the form + buttons go full width. */
+  .cta {
+    padding: 3rem var(--nh-gutter);
+  }
+
+  .ctaCard {
+    padding: 2.5rem 1.5rem;
+    border-radius: var(--nh-radius-2xl);
+  }
+
+  .ctaForm {
+    flex-direction: column;
+  }
+
+  .ctaInput {
+    min-width: 0;
+  }
+
+  .ctaForm :global(.btn),
+  .ctaLoggedInActions :global(.btn) {
+    width: 100%;
+    justify-content: center;
+  }
+
+    /* Footer: keep the three link columns side-by-side, just tighter type. */
+  .footerLinks {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .footerColTitle {
+    font-size: 0.78rem;
+  }
+
+  .footer {
+    padding: 3rem var(--nh-gutter) 2rem;
+  }
 }

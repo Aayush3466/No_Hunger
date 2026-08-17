@@ -12,14 +12,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             </span>
             NoHunger
           </Link>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-  <Link href="/signup" className={styles.hint}>
-    Create account
-  </Link>
-  <Link href="/map" className={styles.hint}>
-    Browse without an account
-  </Link>
-</div>
+          <Link href="/map" className={`btn btn-ghost ${styles.authHeaderLink}`}>
+            Browse the map
+          </Link>
         </div>
       </header>
       <main style={{ maxWidth: 460, margin: '0 auto', padding: '2rem var(--nh-gutter) 3rem' }}>

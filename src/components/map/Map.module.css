@@ -133,6 +133,38 @@
   overflow-y: auto;
 }
 
+/* Backdrop is desktop-hidden; there the panel is a right-docked dropdown. */
+.filtersBackdrop {
+  display: none;
+}
+
+/* Mobile / tablet: the filter panel becomes a bottom sheet with a dimmed
+   backdrop, sitting above the listings sheet (z-index 600) so the two surfaces
+   never overlap and fight for space. */
+@media (max-width: 899px) {
+  .filtersBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 610;
+    background: color-mix(in srgb, var(--nh-ink) 35%, transparent);
+  }
+
+  .filters {
+    position: fixed;
+    inset-inline: 0;
+    top: auto;
+    bottom: 0;
+    z-index: 620;
+    max-width: none;
+    margin: 0;
+    max-height: 80dvh;
+    border-radius: var(--nh-radius-3xl) var(--nh-radius-3xl) 0 0;
+    padding-bottom: calc(1rem + var(--nh-safe-bottom));
+    box-shadow: 0 -20px 40px -24px rgba(44, 24, 16, .35);
+  }
+}
+
 .filterRow {
   display: grid;
   gap: .4rem;

@@ -13,7 +13,6 @@ const ALLOWED_IMAGE_TYPE = 'image/webp';
 export async function createDonationAction(
   formData: FormData,
 ): Promise<ActionResult<{ donationId: string }>> {
-  console.log('[donate] action called');
   let uploadedPath: string | null = null;
 
   try {
@@ -22,10 +21,8 @@ export async function createDonationAction(
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) {
-      console.log('[donate] no user');
       return { ok: false, error: 'Sign in to post food.' };
     }
-    console.log('[donate] user:', user.id);
 
     const raw = {
       food_name: formData.get('food_name'),
@@ -41,19 +38,15 @@ export async function createDonationAction(
       delivery_radius_km: formData.get('delivery_radius_km') || null,
       expires_at: formData.get('expires_at'),
     };
-    console.log('[donate] raw input:', raw);
 
     const parsed = donationSchema.safeParse(raw);
     if (!parsed.success) {
-      console.log('[donate] validation failed:', JSON.stringify(parsed.error.issues, null, 2));
       return { ok: false, error: parsed.error.issues[0]?.message ?? 'Check the form and retry.' };
     }
-    console.log('[donate] validation passed');
 
     // --- photo ---------------------------------------------------------------
     const photo = formData.get('photo');
     if (photo instanceof File && photo.size > 0) {
-      console.log('[donate] photo:', photo.type, photo.size, 'bytes');
       if (photo.type !== ALLOWED_IMAGE_TYPE) {
         return { ok: false, error: 'The photo must be a WebP produced by the app.' };
       }
@@ -68,17 +61,12 @@ export async function createDonationAction(
         .upload(path, photo, { contentType: ALLOWED_IMAGE_TYPE, upsert: false });
 
       if (uploadError) {
-        console.log('[donate] upload error:', uploadError);
         return { ok: false, error: 'The photo could not be uploaded. Try again.' };
       }
       uploadedPath = path;
-      console.log('[donate] uploaded to:', path);
-    } else {
-      console.log('[donate] no photo attached');
     }
 
     // --- row -----------------------------------------------------------------
-    console.log('[donate] inserting row');
     const { data, error } = await supabase
       .from('donations')
       .insert({
@@ -103,7 +91,6 @@ export async function createDonationAction(
       .single();
 
     if (error || !data) {
-      console.log('[donate] insert failed:', error);
       if (uploadedPath) {
         await createAdminClient().storage.from(STORAGE_BUCKET).remove([uploadedPath]);
         uploadedPath = null;
@@ -111,12 +98,10 @@ export async function createDonationAction(
       return actionError(error);
     }
 
-    console.log('[donate] success, id:', data.id);
     revalidatePath('/map');
     revalidatePath('/orders');
     return { ok: true, data: { donationId: data.id } };
   } catch (error) {
-    console.log('[donate] threw:', error);
     if (uploadedPath) {
       try {
         await createAdminClient().storage.from(STORAGE_BUCKET).remove([uploadedPath]);

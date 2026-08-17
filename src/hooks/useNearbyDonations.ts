@@ -92,11 +92,20 @@ export function useNearbyDonations(center: LatLng | null, filters: NearbyFilters
     setDonations((previous) => previous.filter((item) => item.id !== donationId));
   }, []);
 
-  // Initial load and any change to where we are looking or what we are asking for.
+  // First load fires immediately so the map shows food without a 500ms wait.
+  // Every later change (map pan, filter tweak) stays debounced so panning
+  // doesn't spam the RPC.
+  const initialLoadDone = useRef(false);
+
   useEffect(() => {
     if (!center) return;
     setLoading(true);
-    refetchDebounced();
+    if (initialLoadDone.current) {
+      refetchDebounced();
+    } else {
+      initialLoadDone.current = true;
+      void fetchNow();
+    }
   }, [
     center?.lat,
     center?.lng,
@@ -106,6 +115,7 @@ export function useNearbyDonations(center: LatLng | null, filters: NearbyFilters
     filters.categories.join(','),
     filters.foodTypes.join(','),
     refetchDebounced,
+    fetchNow,
     center,
   ]);
 

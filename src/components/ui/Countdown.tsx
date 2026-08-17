@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { formatCountdown } from '@/lib/format';
 import styles from './ui.module.css';
 
@@ -20,10 +20,16 @@ export function Countdown({
 }) {
   const [now, setNow] = useState(() => Date.now());
 
+  // Keep the latest onExpire in a ref so the interval effect depends only on
+  // `expiresAt`. Callers routinely pass an inline arrow (new identity every
+  // render); without this the timer tore down and rebuilt on every re-render.
+  const onExpireRef = useRef(onExpire);
+  onExpireRef.current = onExpire;
+
   useEffect(() => {
     const remaining = Date.parse(expiresAt) - Date.now();
     if (remaining <= 0) {
-      onExpire?.();
+      onExpireRef.current?.();
       return;
     }
     const interval = remaining < 5 * 60_000 ? 1_000 : 30_000;
@@ -32,11 +38,11 @@ export function Countdown({
       setNow(next);
       if (Date.parse(expiresAt) - next <= 0) {
         window.clearInterval(id);
-        onExpire?.();
+        onExpireRef.current?.();
       }
     }, interval);
     return () => window.clearInterval(id);
-  }, [expiresAt, onExpire]);
+  }, [expiresAt]);
 
   const label = formatCountdown(expiresAt, now);
   const urgent = Date.parse(expiresAt) - now < 30 * 60_000;

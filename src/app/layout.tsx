@@ -1,6 +1,36 @@
 import type { Metadata, Viewport } from 'next';
+import { DM_Sans, Fraunces } from 'next/font/google';
 import Script from 'next/script';
 import '@/styles/globals.css';
+
+/*
+ * Self-hosted fonts via next/font. They are fetched at build time and served
+ * from our own origin, so there is no render-blocking request to Google Fonts
+ * and no layout shift (next/font generates a metrics-matched fallback).
+ *
+ * Both are loaded as VARIABLE fonts (no fixed weight):
+ *   - Fraunces additionally requests the optical-size axis, because the display
+ *     type uses `font-variation-settings: "opsz" 144`. Italic is included for
+ *     the hero accent (`.heroTitleAccent`).
+ *   - DM Sans's variable weight range (100–1000) covers every weight the UI
+ *     uses (400/500/600/700).
+ *
+ * The CSS variables below are consumed by tokens.css
+ * (`--nh-font-display` / `--nh-font-body`).
+ */
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+  variable: '--font-fraunces',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-sans',
+});
 
 export const metadata: Metadata = {
   title: "NoHunger — Turn extra food into someone's next meal",
@@ -20,15 +50,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body>
         {children}
         {/*

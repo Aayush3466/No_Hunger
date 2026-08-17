@@ -240,6 +240,7 @@ export function DonateForm() {
           id="total_servings"
           name="total_servings"
           type="number"
+          inputMode="numeric"
           min={1}
           max={500}
           defaultValue={2}
@@ -312,6 +313,7 @@ export function DonateForm() {
             id="delivery_radius_km"
             name="delivery_radius_km"
             type="number"
+            inputMode="decimal"
             min={0.5}
             max={50}
             step={0.5}

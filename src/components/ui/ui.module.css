@@ -343,6 +343,75 @@
   object-fit: cover;
 }
 
+/* --- top-bar user group (signed-in): avatar + logout ----------------------- */
+.userGroup {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.avatarLink {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--nh-green);
+  background: var(--nh-cream);
+  color: var(--nh-green);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform .15s ease, border-color .15s ease;
+}
+
+.avatarLink:hover {
+  transform: scale(1.05);
+  border-color: var(--nh-honey);
+}
+
+.avatarInitial {
+  font-family: var(--nh-font-display);
+  font-weight: 700;
+  font-size: .95rem;
+  color: inherit;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- auth header action ---------------------------------------------------- */
+.authHeaderLink {
+  padding: .5rem .9rem;
+  font-size: .9rem;
+  white-space: nowrap;
+}
+
+/* --- generic confirm modal (ConfirmDialog) --------------------------------- */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  background: color-mix(in srgb, var(--nh-ink) 45%, transparent);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modalCard {
+  background: var(--nh-cream);
+  border-radius: var(--nh-radius-2xl);
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  box-shadow: var(--nh-shadow-float);
+}
+
 @container (min-width: 560px) {
   .cardGrid {
     grid-template-columns: repeat(2, 1fr);

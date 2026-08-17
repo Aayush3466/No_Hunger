@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Avatar } from '@/components/ui/Avatar';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { RatingModal } from '@/components/orders/RatingModal';
 import type { LatLng } from '@/lib/geo';
@@ -26,6 +27,7 @@ export function ActiveOrder({ requestId }: { requestId: string }) {
   const [routeTick, setRouteTick] = useState(0);
   const [busy, setBusy] = useState<'complete' | 'cancel' | null>(null);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
+  const [confirmingCancel, setConfirmingCancel] = useState(false);
 
   // Once completion succeeds we keep a stripped-down record so the rating
   // modal can still identify the counterpart, even after the order 'goes'.
@@ -115,15 +117,16 @@ export function ActiveOrder({ requestId }: { requestId: string }) {
   const handleCancel = useCallback(async () => {
     if (!details) return;
     const reason = details.role === 'donor' ? 'donor_cancelled' : 'receiver_cancelled';
-    if (!window.confirm('Cancel this order? The servings go back on the map.')) return;
     setBusy('cancel');
     setActionMessage(null);
     const result = await cancelRequestAction(details.request_id, reason);
     setBusy(null);
     if (!result.ok) {
       setActionMessage(result.error ?? 'Could not cancel.');
+      setConfirmingCancel(false);
       return;
     }
+    setConfirmingCancel(false);
     void refresh();
   }, [details, refresh]);
 
@@ -272,7 +275,7 @@ export function ActiveOrder({ requestId }: { requestId: string }) {
               <button
                 type="button"
                 className="btn btn-ghost"
-                onClick={() => void handleCancel()}
+                onClick={() => setConfirmingCancel(true)}
                 disabled={busy !== null}
               >
                 {busy === 'cancel' ? 'Cancelling…' : 'Cancel order'}
@@ -290,7 +293,7 @@ export function ActiveOrder({ requestId }: { requestId: string }) {
               <button
                 type="button"
                 className="btn btn-ghost"
-                onClick={() => void handleCancel()}
+                onClick={() => setConfirmingCancel(true)}
                 disabled={busy !== null}
               >
                 {busy === 'cancel' ? 'Cancelling…' : 'Cancel order'}
@@ -299,6 +302,19 @@ export function ActiveOrder({ requestId }: { requestId: string }) {
           </>
         )}
       </section>
+
+      {confirmingCancel ? (
+        <ConfirmDialog
+          title="Cancel this order?"
+          body="The servings go back on the map for someone else to claim."
+          confirmLabel="Cancel order"
+          cancelLabel="Keep order"
+          tone="danger"
+          busy={busy === 'cancel'}
+          onConfirm={() => void handleCancel()}
+          onCancel={() => setConfirmingCancel(false)}
+        />
+      ) : null}
     </div>
   );
 }

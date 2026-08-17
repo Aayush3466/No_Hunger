@@ -101,7 +101,7 @@ export function ProfileEditForm({ initial }: { initial: Initial }) {
         )
       ) : null}
 
-      <button type="submit" className="btn btn-primary" disabled={saving}>
+      <button type="submit" className="btn btn-primary btn-block" disabled={saving}>
         {saving ? 'Saving…' : 'Save changes'}
       </button>
     </form>

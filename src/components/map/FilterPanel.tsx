@@ -21,7 +21,11 @@ export function FilterPanel({
   onClose: () => void;
 }) {
   return (
-    <div className={styles.filters} role="group" aria-label="Filters">
+    <>
+      {/* Dimmed backdrop — only shown on mobile, where the panel is a bottom
+          sheet. On desktop the panel is a dropdown and this stays display:none. */}
+      <div className={styles.filtersBackdrop} onClick={onClose} aria-hidden="true" />
+      <div className={styles.filters} role="group" aria-label="Filters">
       <div className={styles.filterRow}>
         <span className={styles.filterLabel}>Within</span>
         <div className={ui.segments}>
@@ -103,6 +107,7 @@ export function FilterPanel({
         <input
           id="min-servings"
           type="number"
+          inputMode="numeric"
           min={1}
           max={50}
           value={filters.minServings}
@@ -113,9 +118,10 @@ export function FilterPanel({
         />
       </div>
 
-      <button type="button" className="btn btn-outline btn-block" onClick={onClose}>
-        Done
-      </button>
-    </div>
+        <button type="button" className="btn btn-outline btn-block" onClick={onClose}>
+          Done
+        </button>
+      </div>
+    </>
   );
 }

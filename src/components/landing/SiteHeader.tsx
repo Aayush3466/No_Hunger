@@ -2,13 +2,15 @@ import Link from 'next/link';
 import { getSessionUser } from '@/lib/supabase/server';
 import { createServerSupabase } from '@/lib/supabase/server';
 import styles from './Landing.module.css';
+import { HeaderNav } from './HeaderNav';
 
 /**
  * Ported from the <header> in NoHunger-Organic.html.
  * The "Get started" CTA is swapped in and out based on auth:
  *   - signed out: "Sign in"  →  /login
  *   - signed in : avatar → /profile, plus a Logout button
- * Everything else — structure, copy, style values — unchanged.
+ * The nav links + CTA are handed to <HeaderNav>, which renders them inline on
+ * desktop and as a collapsible dropdown on mobile.
  */
 export async function SiteHeader() {
   const user = await getSessionUser();
@@ -28,6 +30,35 @@ export async function SiteHeader() {
     initial = (profile?.full_name ?? user.email ?? '?').trim().charAt(0).toUpperCase() || '?';
   }
 
+  const authSlot = user ? (
+    <div className={styles.authGroup}>
+      <Link
+        href="/profile"
+        className={styles.avatarLink}
+        aria-label="Your profile"
+        title="Your profile"
+      >
+        {avatarUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={avatarUrl} alt="" className={styles.avatarImg} />
+        ) : (
+          <span className={styles.avatarInitial} aria-hidden="true">
+            {initial}
+          </span>
+        )}
+      </Link>
+      <form action="/auth/signout" method="post">
+        <button type="submit" className={`btn btn-outline ${styles.headerCta}`}>
+          Logout
+        </button>
+      </form>
+    </div>
+  ) : (
+    <Link href="/login" className={`btn btn-primary ${styles.headerCta}`}>
+      Sign in
+    </Link>
+  );
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Main">
@@ -37,40 +68,7 @@ export async function SiteHeader() {
           </span>
           NoHunger
         </Link>
-        <div className={styles.navLinks}>
-          <a href="#how">How it works</a>
-          <a href="#features">Features</a>
-          <a href="#about">About</a>
-
-          {user ? (
-            <div className={styles.authGroup}>
-              <Link
-                href="/profile"
-                className={styles.avatarLink}
-                aria-label="Your profile"
-                title="Your profile"
-              >
-                {avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={avatarUrl} alt="" className={styles.avatarImg} />
-                ) : (
-                  <span className={styles.avatarInitial} aria-hidden="true">
-                    {initial}
-                  </span>
-                )}
-              </Link>
-              <form action="/auth/signout" method="post">
-                <button type="submit" className={`btn btn-outline ${styles.headerCta}`}>
-                  Logout
-                </button>
-              </form>
-            </div>
-          ) : (
-            <Link href="/login" className={`btn btn-primary ${styles.headerCta}`}>
-              Sign in
-            </Link>
-          )}
-        </div>
+        <HeaderNav authSlot={authSlot} />
       </nav>
     </header>
   );

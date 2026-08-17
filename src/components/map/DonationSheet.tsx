@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Avatar } from '@/components/ui/Avatar';
 import { Countdown } from '@/components/ui/Countdown';
 import { SafetyNotice } from '@/components/ui/SafetyNotice';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { publicImageUrl } from '@/lib/env';
 import { CATEGORY_LABELS, FOOD_TYPE_LABELS, formatAge, formatRating, servingsLabel } from '@/lib/format';
 import { formatDistance, type LatLng } from '@/lib/geo';
@@ -37,6 +39,10 @@ export function DonationSheet({
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useScrollLock(true);
+  useFocusTrap(dialogRef, true);
 
   useEffect(() => {
     closeRef.current?.focus();
@@ -87,7 +93,7 @@ export function DonationSheet({
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className={styles.detail}>
+      <div className={styles.detail} ref={dialogRef} tabIndex={-1}>
         <div className={ui.rowBetween}>
           <div className={ui.chipRow}>
             <span className={ui.chip}>{CATEGORY_LABELS[donation.category]}</span>
@@ -236,6 +242,13 @@ export function DonationSheet({
                   maxLength={240}
                   placeholder="Flat 3, blue gate opposite the school"
                   onChange={(event) => setAddress(event.target.value)}
+                  onFocus={(event) => {
+                    // The sheet is bottom-anchored; when the mobile keyboard
+                    // opens it can cover this field. Nudge it into view within
+                    // the scrollable dialog once the keyboard has settled.
+                    const el = event.currentTarget;
+                    window.setTimeout(() => el.scrollIntoView({ block: 'center' }), 100);
+                  }}
                 />
                 <p className={ui.hint}>
                   Only the donor sees this, and only while the handover is live.

@@ -40,8 +40,11 @@
   --nh-honey-50: rgba(200, 150, 62, .5);
 
   /* --- Type -------------------------------------------------------------- */
-  --nh-font-display: 'Fraunces', serif;
-  --nh-font-body: 'DM Sans', system-ui, sans-serif;
+  /* next/font sets --font-fraunces / --font-dm-sans on <html> (see layout.tsx);
+     each already includes a metrics-matched fallback, so the trailing generic
+     is only a last resort. */
+  --nh-font-display: var(--font-fraunces), 'Fraunces', serif;
+  --nh-font-body: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
   --nh-line-height: 1.55;
 
   /* --- Radii ------------------------------------------------------------- */

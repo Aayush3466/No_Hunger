@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { submitRatingAction } from '@/server/actions/ratings';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import ui from '@/components/ui/ui.module.css';
 import styles from './RatingModal.module.css';
 
@@ -27,6 +29,10 @@ export function RatingModal({
   const [comment, setComment] = useState(initialComment ?? '');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useScrollLock(true);
+  useFocusTrap(cardRef, true);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -69,7 +75,7 @@ export function RatingModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className={styles.card}>
+      <div className={styles.card} ref={cardRef} tabIndex={-1}>
         <h2 id="rate-title" className={`serif ${ui.cardTitle}`}>
           Rate this handover
         </h2>

@@ -118,10 +118,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none }
     "main"
     "nav";
   background: var(--nh-cream);
+    overflow-x: clip;
 }
 
 .app-shell > header { grid-area: header; }
-.app-main         { grid-area: main; min-height: 0; overflow-y: auto; }
+.app-main         { grid-area: main; min-height: 0; overflow-y: auto; overflow-x: hidden; }
 .app-nav          { grid-area: nav;  min-height: 0; }
 
 @media (min-width: 900px) {
@@ -143,6 +144,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none }
   background: var(--nh-cream-85) !important;
   color: var(--nh-text-subtle) !important;
   font-size: .68rem !important;
+  white-space: nowrap;
 }
 .leaflet-control-attribution a { color: var(--nh-green) }
 .leaflet-bar a {
